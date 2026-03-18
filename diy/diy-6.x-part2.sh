@@ -54,6 +54,29 @@ cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568/rk3566-jp-tvbox.dts target/linux/
 # ============================================================================================================
 
 # ============================================================================================================
+# 移植RK3568 BenDian One（奔电一号）
+# ============================================================================================================
+# 增加设备定义到 armv8.mk
+echo -e "\ndefine Device/bendian_bd-one
+  DEVICE_VENDOR := BenDian
+  DEVICE_MODEL := BD One
+  SOC := rk3568
+  UBOOT_DEVICE_NAME := generic-rk3568
+endef
+TARGET_DEVICES += bendian_bd-one" >> target/linux/rockchip/image/armv8.mk
+
+# 复制内核 DTS 到 target/linux/rockchip/dts/rk3568/
+cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568/rk3568-bendian-bd-one.dts \
+    target/linux/rockchip/dts/rk3568/
+
+# 添加 DTB 编译补丁
+cp -f $GITHUB_WORKSPACE/configfiles/patch/801-add-rk3568-bendian-bd-one-dtb.patch \
+    target/linux/rockchip/patches-6.6/
+# ============================================================================================================
+# BenDian BD One 适配结束
+# ============================================================================================================
+
+# ============================================================================================================
 # 自定义DIY⬇⬇⬇
 # ============================================================================================================
 # clash_meta
