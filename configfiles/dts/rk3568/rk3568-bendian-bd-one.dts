@@ -139,7 +139,7 @@
 	/* ------------------------------------------------------------------ */
 	/*  Power supply rails                                                 */
 	/* ------------------------------------------------------------------ */
-	vcc12v-dcin: vcc12v-dcin {
+	vcc12v_dcin: vcc12v-dcin {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc12v_dcin";
 		regulator-always-on;
@@ -148,7 +148,7 @@
 		regulator-max-microvolt = <12000000>;
 	};
 
-	vcc3v3-sys: vcc3v3-sys {
+	vcc3v3_sys: vcc3v3-sys {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc3v3_sys";
 		regulator-always-on;
@@ -158,7 +158,7 @@
 		vin-supply = <&vcc12v_dcin>;
 	};
 
-	vcc5v0-sys: vcc5v0-sys {
+	vcc5v0_sys: vcc5v0-sys {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc5v0_sys";
 		regulator-always-on;
@@ -169,7 +169,7 @@
 	};
 
 	/* 5V USB power controlled by GPIO0_B1 */
-	vcc5v0-usb: vcc5v0-usb {
+	vcc5v0_usb: vcc5v0-usb {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc5v0_usb";
 		enable-active-high;
@@ -181,7 +181,7 @@
 		vin-supply = <&vcc5v0_sys>;
 	};
 
-	vcc-3v3: vcc-3v3 {
+	vcc_3v3: vcc-3v3 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc_3v3";
 		regulator-always-on;
@@ -191,7 +191,7 @@
 		vin-supply = <&vcc3v3_sys>;
 	};
 
-	vcc-1v8: vcc-1v8 {
+	vcc_1v8: vcc-1v8 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc_1v8";
 		regulator-always-on;
@@ -201,7 +201,7 @@
 		vin-supply = <&vcc3v3_sys>;
 	};
 
-	vcca-1v8: vcca-1v8 {
+	vcca_1v8: vcca-1v8 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcca_1v8";
 		regulator-always-on;
@@ -211,7 +211,7 @@
 		vin-supply = <&vcc3v3_sys>;
 	};
 
-	vdda-0v9: vdda-0v9 {
+	vdda_0v9: vdda-0v9 {
 		compatible = "regulator-fixed";
 		regulator-name = "vdda_0v9";
 		regulator-always-on;
@@ -222,7 +222,7 @@
 	};
 
 	/* PCIe 3.0 SSD power: GPIO0_B0 enable → vcc3v3_pi6c_03 → vcc3v3_pcie */
-	vcc3v3-pi6c-03: vcc3v3-pi6c-03 {
+	vcc3v3_pi6c_03: vcc3v3-pi6c-03 {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc3v3_pi6c_03";
 		enable-active-high;
@@ -234,7 +234,7 @@
 		vin-supply = <&vcc12v_dcin>;
 	};
 
-	vcc3v3-pcie: vcc3v3-pcie {
+	vcc3v3_pcie: vcc3v3-pcie {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc3v3_pcie";
 		regulator-always-on;
@@ -245,7 +245,7 @@
 	};
 
 	/* GPU voltage: PWM4 controlled */
-	vdd-gpu: vdd-gpu {
+	vdd_gpu: vdd-gpu {
 		compatible = "pwm-regulator";
 		pwms = <&pwm4 0 5000 1>;
 		pwm-supply = <&vcc3v3_sys>;
@@ -260,7 +260,7 @@
 	};
 
 	/* Logic voltage: PWM5 controlled */
-	vdd-logic: vdd-logic {
+	vdd_logic: vdd-logic {
 		compatible = "pwm-regulator";
 		pwms = <&pwm5 0 5000 1>;
 		pwm-supply = <&vcc3v3_sys>;
@@ -446,7 +446,7 @@
 		#size-cells = <0>;
 
 		/* RTL8365MB 5-port switch */
-		switch@29 {
+		switch@1d {
 			compatible = "realtek,rtl8365mb";
 			reg = <0x1d>;
 			reset-gpios = <&gpio0 RK_PA3 GPIO_ACTIVE_LOW>;
