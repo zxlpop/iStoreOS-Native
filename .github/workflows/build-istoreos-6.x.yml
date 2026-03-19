@@ -188,16 +188,4 @@ jobs:
         files: |
           ${{ env.FIRMWARE }}/*squashfs-sysupgrade.img.gz
 
-    - name: 删除运行记录
-      uses: Mattraks/delete-workflow-runs@main
-      with:
-        retain_days: 1
-        keep_minimum_runs: 1
-        token: ${{ env.GITHUB_TOKEN }}
 
-    - name: 删除自动发布的旧固件
-      uses: dev-drprasad/delete-older-releases@master
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-        keep_latest: 15
-        delete_tags: true
