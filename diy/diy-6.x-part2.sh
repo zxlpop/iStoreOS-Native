@@ -61,6 +61,7 @@ echo -e "\ndefine Device/bendian_bd-one
   DEVICE_VENDOR := BenDian
   DEVICE_MODEL := BD One
   SOC := rk3568
+  DEVICE_DTS := rk3568/rk3568-bendian-bd-one
   UBOOT_DEVICE_NAME := generic-rk3568
 endef
 TARGET_DEVICES += bendian_bd-one" >> target/linux/rockchip/image/armv8.mk
