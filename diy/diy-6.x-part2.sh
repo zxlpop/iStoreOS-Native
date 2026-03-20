@@ -69,9 +69,6 @@ TARGET_DEVICES += bendian_bd-one" >> target/linux/rockchip/image/armv8.mk
 cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568/rk3568-bendian-bd-one.dts \
     target/linux/rockchip/dts/rk3568/
 
-# 添加 DTB 编译补丁
-cp -f $GITHUB_WORKSPACE/configfiles/patch/801-add-rk3568-bendian-bd-one-dtb.patch \
-    target/linux/rockchip/patches-6.6/
 # ============================================================================================================
 # BenDian BD One 适配结束
 # ============================================================================================================
