@@ -57,7 +57,10 @@ cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568/rk3566-jp-tvbox.dts target/linux/
 # 移植RK3568 BenDian One（奔电一号）
 # ============================================================================================================
 # 增加设备定义到 armv8.mk
-# DEVICE_DTS 指定 dts 文件名（不含路径前缀 rk3568/ 和后缀 .dts）
+# DEVICE_DTS := rk3568/rk3568-bendian-bd-one
+# 构建系统编译路径：DTS_DIR/rk3568/rk3568-bendian-bd-one.dts
+#   DTS_DIR = $(LINUX_DIR)/arch/arm64/boot/dts
+#   → linux-6.6.x/arch/arm64/boot/dts/rk3568/rk3568-bendian-bd-one.dts
 echo -e "\ndefine Device/bendian_bd-one
   DEVICE_VENDOR := BenDian
   DEVICE_MODEL := BD One
@@ -67,23 +70,14 @@ echo -e "\ndefine Device/bendian_bd-one
 endef
 TARGET_DEVICES += bendian_bd-one" >> target/linux/rockchip/image/armv8.mk
 
-# 创建目标目录
-mkdir -p target/linux/rockchip/dts/rk3568
-
-# 复制内核 DTS 到 target/linux/rockchip/dts/rk3568/
-# OpenWrt 会自动扫描并编译这个目录下的所有 .dts 文件
+# 复制 DTS 文件到 OpenWrt 的内核 files/ overlay 目录
+# OpenWrt 在内核编译前会将 target/linux/rockchip/files/ 下的文件覆盖到内核源码树
+# 路径结构必须与内核源码完全对应：
+#   files/arch/arm64/boot/dts/rk3568/ → linux-6.6.x/arch/arm64/boot/dts/rk3568/
+mkdir -p target/linux/rockchip/files/arch/arm64/boot/dts/rk3568
 cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568/rk3568-bendian-bd-one.dts \
-    target/linux/rockchip/dts/rk3568/
+    target/linux/rockchip/files/arch/arm64/boot/dts/rk3568/
 
-# 同时需要复制到内核源码目录，确保编译时能找到文件
-# 创建内核源码目录结构
-mkdir -p target/linux/rockchip/files/arch/arm64/boot/dts/rockchip/rk3568
-
-# 复制 DTS 文件到内核源码目录
-cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568/rk3568-bendian-bd-one.dts \
-    target/linux/rockchip/files/arch/arm64/boot/dts/rockchip/rk3568/
-
-# 注意：不需要添加 DTB 到 Makefile！构建系统会自动处理
 # ============================================================================================================
 # BenDian BD One 适配结束
 # ============================================================================================================
