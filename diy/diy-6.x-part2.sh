@@ -30,8 +30,8 @@ cp -f $GITHUB_WORKSPACE/configfiles/uboot-rockchip/tvi3315a-rk3399_defconfig pac
 # 复制dts到files/arch/arm64/boot/dts/rockchip
 cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3399/{rk3399.dtsi,rk3399-opp.dtsi,rk3399-tvi3315a.dts} target/linux/rockchip/files/arch/arm64/boot/dts/rockchip/
 
-# 添加dtb补丁到target/linux/rockchip/patches-6.6
-cp -f $GITHUB_WORKSPACE/configfiles/patch/800-add-rk3399-tvi3315a-dtb-to-makefile.patch target/linux/rockchip/patches-6.6/
+# 注意：不需要手动添加 DTB 到 Makefile！
+# OpenWrt 构建系统会自动扫描 target/linux/rockchip/dts/ 下的 .dts 文件并编译
 # ============================================================================================================
 # RK3399示例结束
 # ============================================================================================================
@@ -57,6 +57,7 @@ cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568/rk3566-jp-tvbox.dts target/linux/
 # 移植RK3568 BenDian One（奔电一号）
 # ============================================================================================================
 # 增加设备定义到 armv8.mk
+# DEVICE_DTS 指定 dts 文件名（不含路径前缀 rk3568/ 和后缀 .dts）
 echo -e "\ndefine Device/bendian_bd-one
   DEVICE_VENDOR := BenDian
   DEVICE_MODEL := BD One
@@ -66,10 +67,23 @@ echo -e "\ndefine Device/bendian_bd-one
 endef
 TARGET_DEVICES += bendian_bd-one" >> target/linux/rockchip/image/armv8.mk
 
+# 创建目标目录
+mkdir -p target/linux/rockchip/dts/rk3568
+
 # 复制内核 DTS 到 target/linux/rockchip/dts/rk3568/
+# OpenWrt 会自动扫描并编译这个目录下的所有 .dts 文件
 cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568/rk3568-bendian-bd-one.dts \
     target/linux/rockchip/dts/rk3568/
 
+# 同时需要复制到内核源码目录，确保编译时能找到文件
+# 创建内核源码目录结构
+mkdir -p target/linux/rockchip/files/arch/arm64/boot/dts/rockchip/rk3568
+
+# 复制 DTS 文件到内核源码目录
+cp -f $GITHUB_WORKSPACE/configfiles/dts/rk3568/rk3568-bendian-bd-one.dts \
+    target/linux/rockchip/files/arch/arm64/boot/dts/rockchip/rk3568/
+
+# 注意：不需要添加 DTB 到 Makefile！构建系统会自动处理
 # ============================================================================================================
 # BenDian BD One 适配结束
 # ============================================================================================================
